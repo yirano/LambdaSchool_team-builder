@@ -25,7 +25,7 @@ function App() {
     } else {
       setData(server)
     }
-  }, [server])
+  }, [server, filter])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -67,16 +67,6 @@ function App() {
     })
   }
 
-  const handleFilter = (e) => {
-    const id = e.target.value
-    setFilter(id)
-
-    setData(server)
-    if (id !== 'all') {
-      return setData(server.filter((user) => { return user.teamNumber === id }))
-    }
-  }
-
   return (
     <div className="App">
       <StyledApp>
@@ -92,7 +82,7 @@ function App() {
         </Collapse>
 
         <Input type="select" style={{ width: '150px', alignSelf: 'flex-end', margin: '20px 100px' }} name="select"
-          onChange={(e) => handleFilter(e)} >
+          onChange={e => setFilter(e.target.value)} >
           <option value="" selected disabled hidden>Filter by Team</option>
           <option value="all" >All</option>
           <option value="1" >1</option>
